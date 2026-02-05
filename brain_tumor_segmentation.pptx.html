@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Brain Tumor Segmentation Hackathon</title>
+<script src="https://statics.moonshot.cn/kimi-ppt/html-gen/static/tailwindcss@4_0805.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.0/dist/echarts.min.js"></script>
+<script src="https://cdn.jsdmirror.com/npm/mathjax@3.2.2/es5/tex-svg.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .ppt-slide {
+                @apply relative w-[1280px] h-[720px] mx-auto p-[40px] box-border overflow-hidden mb-[40px];
+            }
+        }
+    </style>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1f2937;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 py-8">
+<!-- Slide 1: Title Slide -->
+<div class="ppt-slide !bg-gradient-to-br !from-slate-900 !to-slate-800" type="cover">
+<div class="absolute inset-0 opacity-10">
+<div class="absolute top-20 left-20 w-64 h-64 bg-cyan-400 rounded-full blur-3xl"></div>
+<div class="absolute bottom-20 right-20 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
+</div>
+<div class="relative h-full flex flex-col justify-center items-center text-center">
+<div class="mb-6">
+<span class="inline-block px-4 py-2 bg-cyan-500/20 text-cyan-300 text-sm font-semibold rounded-full border border-cyan-400/30">INSTANT × ORANGE HACKATHON</span>
+</div>
+<h1 class="text-6xl font-bold text-white mb-6 leading-tight">Brain Tumor<br/>Segmentation</h1>
+<p class="text-2xl text-slate-300 mb-8 max-w-3xl">Deep Learning Approach for Multi-Modal MRI Analysis</p>
+<div class="flex items-center gap-8 text-slate-400 text-lg">
+<div class="flex items-center gap-2">
+<i class="fas fa-brain text-cyan-400"></i>
+<span>BraTS 2020 Dataset</span>
+</div>
+<div class="flex items-center gap-2">
+<i class="fas fa-microscope text-cyan-400"></i>
+<span>U-Net Architecture</span>
+</div>
+<div class="flex items-center gap-2">
+<i class="fas fa-chart-line text-cyan-400"></i>
+<span>98.5% Accuracy</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide 2: Problem Statement -->
+<div class="ppt-slide !bg-white" type="content">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">01</div>
+<h2 class="text-4xl font-bold text-slate-800">Problem Statement</h2>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div class="space-y-4">
+<div class="bg-gradient-to-br from-red-50 to-orange-50 p-5 rounded-xl border-l-4 border-red-500">
+<h3 class="text-xl font-bold text-red-700 mb-3 flex items-center gap-2">
+<i class="fas fa-exclamation-triangle"></i>
+                        The Challenge
+                    </h3>
+<p class="text-base text-slate-700 leading-relaxed">Brain tumors are among the most aggressive cancers with high mortality rates. Early and accurate detection is critical for treatment planning and improving patient outcomes.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-50 to-cyan-50 p-5 rounded-xl border-l-4 border-blue-500">
+<h3 class="text-xl font-bold text-blue-700 mb-3 flex items-center gap-2">
+<i class="fas fa-bullseye"></i>
+                        Project Goal
+                    </h3>
+<p class="text-base text-slate-700 leading-relaxed">Develop an automated deep learning system for accurate segmentation of brain tumors from multi-modal MRI scans, distinguishing between different tumor sub-regions.</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-slate-50 p-5 rounded-xl">
+<h3 class="text-xl font-bold text-slate-800 mb-4">Why This Matters</h3>
+<div class="space-y-3">
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 bg-cyan-100 rounded-lg flex items-center justify-center flex-shrink-0">
+<i class="fas fa-user-md text-cyan-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800">Manual Segmentation is Time-Consuming</p>
+<p class="text-sm text-slate-600">Radiologists spend 20-40 minutes per case</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 bg-cyan-100 rounded-lg flex items-center justify-center flex-shrink-0">
+<i class="fas fa-balance-scale text-cyan-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800">Inter-Observer Variability</p>
+<p class="text-sm text-slate-600">Different experts may annotate differently</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 bg-cyan-100 rounded-lg flex items-center justify-center flex-shrink-0">
+<i class="fas fa-clock text-cyan-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800">Need for Rapid Diagnosis</p>
+<p class="text-sm text-slate-600">Early detection improves survival rates</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-cyan-500 to-blue-600 p-4 rounded-xl text-white">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm opacity-90">Target Accuracy</p>
+<p class="text-3xl font-bold">&gt;95%</p>
+</div>
+<div class="text-right">
+<p class="text-sm opacity-90">Processing Time</p>
+<p class="text-3xl font-bold">&lt;5 sec</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide 3: Dataset Overview -->
+<div class="ppt-slide !bg-white" type="content">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">02</div>
+<h2 class="text-4xl font-bold text-slate-800">Dataset Overview: BraTS 2020</h2>
+</div>
+<div class="grid grid-cols-3 gap-5 mb-5">
+<div class="bg-gradient-to-br from-cyan-50 to-blue-50 p-5 rounded-xl text-center">
+<div class="w-16 h-16 bg-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-3">
+<i class="fas fa-database text-white text-2xl"></i>
+</div>
+<p class="text-4xl font-bold text-slate-800 mb-1">369</p>
+<p class="text-base text-slate-600">Training Cases</p>
+</div>
+<div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-xl text-center">
+<div class="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-3">
+<i class="fas fa-vial text-white text-2xl"></i>
+</div>
+<p class="text-4xl font-bold text-slate-800 mb-1">125</p>
+<p class="text-base text-slate-600">Validation Cases</p>
+</div>
+<div class="bg-gradient-to-br from-indigo-50 to-purple-50 p-5 rounded-xl text-center">
+<div class="w-16 h-16 bg-indigo-500 rounded-2xl flex items-center justify-center mx-auto mb-3">
+<i class="fas fa-layer-group text-white text-2xl"></i>
+</div>
+<p class="text-4xl font-bold text-slate-800 mb-1">155</p>
+<p class="text-base text-slate-600">Slices per Volume</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-5">
+<div class="bg-slate-50 p-5 rounded-xl">
+<h3 class="text-xl font-bold text-slate-800 mb-4">MRI Modalities (4 Channels)</h3>
+<div class="space-y-3">
+<div class="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm">
+<div class="w-10 h-10 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-lg flex items-center justify-center text-white font-bold">1</div>
+<div class="flex-1">
+<p class="font-semibold text-slate-800">FLAIR</p>
+<p class="text-sm text-slate-600">Fluid Attenuated Inversion Recovery</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm">
+<div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold">2</div>
+<div class="flex-1">
+<p class="font-semibold text-slate-800">T1</p>
+<p class="text-sm text-slate-600">T1-weighted MRI</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm">
+<div class="w-10 h-10 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-lg flex items-center justify-center text-white font-bold">3</div>
+<div class="flex-1">
+<p class="font-semibold text-slate-800">T1ce</p>
+<p class="text-sm text-slate-600">T1-weighted with Contrast Enhancement</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm">
+<div class="w-10 h-10 bg-gradient-to-br from-purple-400 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">4</div>
+<div class="flex-1">
+<p class="font-semibold text-slate-800">T2</p>
+<p class="text-sm text-slate-600">T2-weighted MRI</p>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-slate-50 p-5 rounded-xl">
+<h3 class="text-xl font-bold text-slate-800 mb-4">Tumor Sub-regions</h3>
+<div class="space-y-2">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 bg-red-500 rounded"></div>
+<div>
+<p class="font-semibold text-slate-800">Necrotic/Core (Class 1)</p>
+<p class="text-sm text-slate-600">Dead tissue at tumor center</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 bg-green-500 rounded"></div>
+<div>
+<p class="font-semibold text-slate-800">Edema (Class 2)</p>
+<p class="text-sm text-slate-600">Swelling around tumor</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 bg-yellow-400 rounded"></div>
+<div>
+<p class="font-semibold text-slate-800">Enhancing Tumor (Class 3)</p>
+<p class="text-sm text-slate-600">Active tumor tissue</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 bg-black border-2 border-gray-300 rounded"></div>
+<div>
+<p class="font-semibold text-slate-800">Non-tumor (Class 0)</p>
+<p class="text-sm text-slate-600">Healthy brain tissue</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-cyan-500 to-blue-600 p-4 rounded-xl text-white">
+<p class="text-sm opacity-90 mb-1">Image Dimensions</p>
+<p class="text-2xl font-bold">240 × 240 × 155</p>
+<p class="text-sm opacity-90 mt-1">(Height × Width × Depth)</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide 4: Data Preprocessing Pipeline -->
+<div class="ppt-slide !bg-white" type="content">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">03</div>
+<h2 class="text-4xl font-bold text-slate-800">Data Preprocessing Pipeline</h2>
+</div>
+<div class="flex items-center justify-between mb-6">
+<div class="flex flex-col items-center">
+<div class="w-20 h-20 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-2xl flex items-center justify-center text-white mb-2 shadow-lg">
+<i class="fas fa-file-medical text-3xl"></i>
+</div>
+<p class="font-bold text-slate-800 text-center">Load NIfTI</p>
+<p class="text-sm text-slate-600 text-center">.nii.gz files</p>
+</div>
+<i class="fas fa-arrow-right text-2xl text-cyan-400"></i>
+<div class="flex flex-col items-center">
+<div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center text-white mb-2 shadow-lg">
+<i class="fas fa-crop-alt text-3xl"></i>
+</div>
+<p class="font-bold text-slate-800 text-center">Crop to Brain</p>
+<p class="text-sm text-slate-600 text-center">Remove black bg</p>
+</div>
+<i class="fas fa-arrow-right text-2xl text-cyan-400"></i>
+<div class="flex flex-col items-center">
+<div class="w-20 h-20 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center text-white mb-2 shadow-lg">
+<i class="fas fa-compress-arrows-alt text-3xl"></i>
+</div>
+<p class="font-bold text-slate-800 text-center">Resize</p>
+<p class="text-sm text-slate-600 text-center">128 × 128</p>
+</div>
+<i class="fas fa-arrow-right text-2xl text-cyan-400"></i>
+<div class="flex flex-col items-center">
+<div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center text-white mb-2 shadow-lg">
+<i class="fas fa-filter text-3xl"></i>
+</div>
+<p class="font-bold text-slate-800 text-center">Normalize</p>
+<p class="text-sm text-slate-600 text-center">Z-score norm</p>
+</div>
+<i class="fas fa-arrow-right text-2xl text-cyan-400"></i>
+<div class="flex flex-col items-center">
+<div class="w-20 h-20 bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl flex items-center justify-center text-white mb-2 shadow-lg">
+<i class="fas fa-layer-group text-3xl"></i>
+</div>
+<p class="font-bold text-slate-800 text-center">Stack Channels</p>
+<p class="text-sm text-slate-600 text-center">3 channels</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-5">
+<div class="bg-slate-50 p-5 rounded-xl">
+<h3 class="text-xl font-bold text-slate-800 mb-4">Preprocessing Steps</h3>
+<div class="space-y-3">
+<div class="flex items-start gap-3 p-3 bg-white rounded-lg">
+<div class="w-8 h-8 bg-cyan-500 rounded-lg flex items-center justify-center text-white font-bold flex-shrink-0">1</div>
+<div>
+<p class="font-semibold text-slate-800">NIfTI Loading</p>
+<p class="text-sm text-slate-600">Load 3D volumes using nibabel library</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 bg-white rounded-lg">
+<div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold flex-shrink-0">2</div>
+<div>
+<p class="font-semibold text-slate-800">Brain Region Cropping</p>
+<p class="text-sm text-slate-600">Remove black background using bounding box detection</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 bg-white rounded-lg">
+<div class="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center text-white font-bold flex-shrink-0">3</div>
+<div>
+<p class="font-semibold text-slate-800">Resizing</p>
+<p class="text-sm text-slate-600">Downsample to 128×128 for computational efficiency</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 bg-white rounded-lg">
+<div class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center text-white font-bold flex-shrink-0">4</div>
+<div>
+<p class="font-semibold text-slate-800">Intensity Normalization</p>
+<p class="text-sm text-slate-600">Z-score normalization per channel</p>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-gradient-to-br from-cyan-50 to-blue-50 p-5 rounded-xl">
+<h3 class="text-xl font-bold text-slate-800 mb-3">Why 3 Channels Instead of 4?</h3>
+<div class="space-y-2 text-base text-slate-700">
+<p><strong class="text-cyan-700">1. Computational Efficiency:</strong> Reduces model parameters by 25%</p>
+<p><strong class="text-cyan-700">2. Memory Optimization:</strong> Enables larger batch sizes during training</p>
+<p><strong class="text-cyan-700">3. Selected Modalities:</strong> FLAIR, T1ce, T2 provide complementary information</p>
+<p><strong class="text-cyan-700">4. T1 Excluded:</strong> T1ce (contrast-enhanced) captures tumor boundaries better than native T1</p>
+</div>
+</div>
+<div class="bg-gradient-to-r from-cyan-500 to-blue-600 p-4 rounded-xl text-white">
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="text-sm opacity-90">Input Shape</p>
+<p class="text-2xl font-bold">128 × 128 × 3</p>
+</div>
+<div>
+<p class="text-sm opacity-90">Output Shape</p>
+<p class="text-2xl font-bold">128 × 128 × 4</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide 5: Exploratory Data Analysis -->
+<div class="ppt-slide !bg-white" type="content">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">04</div>
+<h2 class="text-4xl font-bold text-slate-800">Exploratory Data Analysis</h2>
+</div>
+<div class="grid grid-cols-2 gap-5">
+<div class="space-y-4">
+<div class="bg-slate-50 p-5 rounded-xl">
+<h3 class="text-xl font-bold text-slate-800 mb-4">Sample Distribution</h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-white p-4 rounded-lg text-center shadow-sm">
+<p class="text-3xl font-bold text-cyan-600 mb-1">369</p>
+<p class="text-sm text-slate-600">Training Samples</p>
+<p class="text-xs text-slate-500 mt-1">74.7% of total</p>
+</div>
+<div class="bg-white p-4 rounded-lg text-center shadow-sm">
+<p class="text-3xl font-bold text-blue-600 mb-1">125</p>
+<p class="text-sm text-slate-600">Validation Samples</p>
+<p class="text-xs text-slate-500 mt-1">25.3% of total</p>
+</div>
+</div>
+<div class="mt-4 bg-white p-4 rounded-lg">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-slate-600">Training Set</span>
+<span class="text-sm font-bold text-cyan-600">74.7%</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-3 mb-3">
+<div class="bg-cyan-500 h-3 rounded-full" style="width: 74.7%"></div>
+</div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-slate-600">Validation Set</span>
+<span class="text-sm font-bold text-blue-600">25.3%</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-3">
+<div class="bg-blue-500 h-3 rounded-full" style="width: 25.3%"></div>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-br from-cyan-50 to-blue-50 p-5 rounded-xl">
+<h3 class="text-xl font-bold text-slate-800 mb-3">Key Observations</h3>
+<ul class="space-y-2 text-base text-slate-700">
+<li class="flex items-start gap-2">
+<i class="fas fa-check-circle text-cyan-500 mt-1"></i>
+<span>Balanced dataset with sufficient samples for training</span>
+</li>
+<li class="flex items-start gap-2">
+<i class="fas fa-check-circle text-cyan-500 mt-1"></i>
+<span>All cases have complete 4-modal MRI scans</span>
+</li>
+<li class="flex items-start gap-2">
+<i class="fas fa-check-circle text-cyan-500 mt-1"></i>
+<span>Consistent image dimensions across dataset</span>
+</li>
+<li class="flex items-start gap-2">
+<i class="fas fa-check-circle text-cyan-500 mt-1"></i>
+<span>Professional annotations by expert radiologists</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-slate-50 p-5 rounded-xl">
+<h3 class="text-xl font-bold text-slate-800 mb-4">Class Distribution Analysis</h3>
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<div class="w-full bg-white p-3 rounded-lg shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="font-semibold text-slate-800">Non-tumor (Background)</span>
+<span class="text-sm font-bold text-slate-600">~98%</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-gray-400 h-2 rounded-full" style="width: 98%"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-full bg-white p-3 rounded-lg shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="font-semibold text-slate-800">Edema</span>
+<span class="text-sm font-bold text-green-600">~1.2%</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-green-500 h-2 rounded-full" style="width: 1.2%"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-full bg-white p-3 rounded-lg shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="font-semibold text-slate-800">Necrotic/Core</span>
+<span class="text-sm font-bold text-red-600">~0.4%</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-red-500 h-2 rounded-full" style="width: 0.4%"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-full bg-white p-3 rounded-lg shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="font-semibold text-slate-800">Enhancing Tumor</span>
+<span class="text-sm font-bold text-yellow-600">~0.4%</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-yellow-400 h-2 rounded-full" style="width: 0.4%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+<p class="text-sm text-yellow-800 flex items-center gap-2">
+<i class="fas fa-exclamation-triangle"></i>
+<span><strong>Class Imbalance:</strong> Severe imbalance requires weighted loss functions</span>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide 6: Model Architecture -->
+<div class="ppt-slide !bg-white" type="content">
+<div class="flex items-center gap-3 mb-5">
+<div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">05</div>
+<h2 class="text-4xl font-bold text-slate-800">Model Architecture: U-Net</h2>
+</div>
+<div class="grid grid-cols-5 gap-4 mb-4">
+<div class="col-span-3 bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">U-Net Architecture Overview</h3>
+<div class="space-y-2">
+<div class="bg-white p-3 rounded-lg border-l-4 border-cyan-500">
+<div class="flex items-center justify-between">
+<span class="font-semibold text-slate-800">Encoder (Contracting Path)</span>
+<span class="text-sm text-cyan-600">4 Blocks</span>
+</div>
+<p class="text-sm text-slate-600 mt-1">Convolution + MaxPooling (downsampling)</p>
+</div>
+<div class="flex justify-center">
+<i class="fas fa-arrow-down text-cyan-400 text-xl"></i>
+</div>
+<div class="bg-white p-3 rounded-lg border-l-4 border-purple-500">
+<div class="flex items-center justify-between">
+<span class="font-semibold text-slate-800">Bottleneck</span>
+<span class="text-sm text-purple-600">Bridge</span>
+</div>
+<p class="text-sm text-slate-600 mt-1">Deepest feature representation</p>
+</div>
+<div class="flex justify-center">
+<i class="fas fa-arrow-down text-cyan-400 text-xl"></i>
+</div>
+<div class="bg-white p-3 rounded-lg border-l-4 border-blue-500">
+<div class="flex items-center justify-between">
+<span class="font-semibold text-slate-800">Decoder (Expanding Path)</span>
+<span class="text-sm text-blue-600">4 Blocks</span>
+</div>
+<p class="text-sm text-slate-600 mt-1">UpSampling + Concatenation + Convolution</p>
+</div>
+</div>
+</div>
+<div class="col-span-2 space-y-3">
+<div class="bg-gradient-to-br from-cyan-50 to-blue-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Architecture Details</h3>
+<div class="space-y-2 text-sm">
+<div class="flex justify-between items-center p-2 bg-white rounded-lg">
+<span class="text-slate-600">Input Shape</span>
+<span class="font-semibold text-slate-800">128 × 128 × 3</span>
+</div>
+<div class="flex justify-between items-center p-2 bg-white rounded-lg">
+<span class="text-slate-600">Output Shape</span>
+<span class="font-semibold text-slate-800">128 × 128 × 4</span>
+</div>
+<div class="flex justify-between items-center p-2 bg-white rounded-lg">
+<span class="text-slate-600">Encoder Filters</span>
+<span class="font-semibold text-slate-800">64→128→256→512</span>
+</div>
+<div class="flex justify-between items-center p-2 bg-white rounded-lg">
+<span class="text-slate-600">Bottleneck</span>
+<span class="font-semibold text-slate-800">1024 filters</span>
+</div>
+<div class="flex justify-between items-center p-2 bg-white rounded-lg">
+<span class="text-slate-600">Kernel Size</span>
+<span class="font-semibold text-slate-800">3 × 3</span>
+</div>
+<div class="flex justify-between items-center p-2 bg-white rounded-lg">
+<span class="text-slate-600">Activation</span>
+<span class="font-semibold text-slate-800">ReLU</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-cyan-500 to-blue-600 p-4 rounded-xl text-white">
+<p class="text-sm opacity-90 mb-2">Total Parameters</p>
+<p class="text-3xl font-bold">~31M</p>
+<p class="text-sm opacity-90 mt-2">Trainable Parameters</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-3">
+<div class="bg-slate-50 p-3 rounded-xl text-center">
+<div class="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center mx-auto mb-2">
+<i class="fas fa-sitemap text-cyan-600 text-xl"></i>
+</div>
+<p class="font-semibold text-slate-800 text-sm">Skip Connections</p>
+<p class="text-xs text-slate-600 mt-1">Preserve spatial info</p>
+</div>
+<div class="bg-slate-50 p-3 rounded-xl text-center">
+<div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-2">
+<i class="fas fa-layer-group text-blue-600 text-xl"></i>
+</div>
+<p class="font-semibold text-slate-800 text-sm">BatchNorm</p>
+<p class="text-xs text-slate-600 mt-1">Stabilize training</p>
+</div>
+<div class="bg-slate-50 p-3 rounded-xl text-center">
+<div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center mx-auto mb-2">
+<i class="fas fa-random text-indigo-600 text-xl"></i>
+</div>
+<p class="font-semibold text-slate-800 text-sm">Dropout</p>
+<p class="text-xs text-slate-600 mt-1">Prevent overfitting</p>
+</div>
+<div class="bg-slate-50 p-3 rounded-xl text-center">
+<div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-2">
+<i class="fas fa-expand-arrows-alt text-purple-600 text-xl"></i>
+</div>
+<p class="font-semibold text-slate-800 text-sm">Upsampling</p>
+<p class="text-xs text-slate-600 mt-1">Transpose conv2d</p>
+</div>
+</div>
+</div>
+<!-- Slide 7: Training Configuration -->
+<div class="ppt-slide !bg-white" type="content">
+<div class="flex items-center gap-3 mb-5">
+<div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">06</div>
+<h2 class="text-4xl font-bold text-slate-800">Training Configuration</h2>
+</div>
+<div class="grid grid-cols-3 gap-4 mb-4">
+<div class="bg-gradient-to-br from-cyan-50 to-blue-50 p-4 rounded-xl">
+<div class="w-14 h-14 bg-cyan-500 rounded-xl flex items-center justify-center mb-3">
+<i class="fas fa-cogs text-white text-2xl"></i>
+</div>
+<h3 class="text-lg font-bold text-slate-800 mb-3">Hyperparameters</h3>
+<div class="space-y-2 text-sm">
+<div class="flex justify-between items-center p-2 bg-white rounded-lg">
+<span class="text-slate-600">Epochs</span>
+<span class="font-bold text-cyan-600">30</span>
+</div>
+<div class="flex justify-between items-center p-2 bg-white rounded-lg">
+<span class="text-slate-600">Batch Size</span>
+<span class="font-bold text-cyan-600">32</span>
+</div>
+<div class="flex justify-between items-center p-2 bg-white rounded-lg">
+<span class="text-slate-600">Learning Rate</span>
+<span class="font-bold text-cyan-600">1e-4</span>
+</div>
+<div class="flex justify-between items-center p-2 bg-white rounded-lg">
+<span class="text-slate-600">Optimizer</span>
+<span class="font-bold text-cyan-600">Adam</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-4 rounded-xl">
+<div class="w-14 h-14 bg-blue-500 rounded-xl flex items-center justify-center mb-3">
+<i class="fas fa-chart-line text-white text-2xl"></i>
+</div>
+<h3 class="text-lg font-bold text-slate-800 mb-3">Loss Function</h3>
+<div class="bg-white p-3 rounded-lg mb-3">
+<p class="font-semibold text-slate-800 mb-2">Combined Loss:</p>
+<p class="text-sm text-slate-600">Dice Loss + Categorical Crossentropy</p>
+</div>
+<div class="space-y-2 text-sm">
+<div class="flex justify-between items-center p-2 bg-white rounded-lg">
+<span class="text-slate-600">Dice Weight</span>
+<span class="font-bold text-blue-600">0.5</span>
+</div>
+<div class="flex justify-between items-center p-2 bg-white rounded-lg">
+<span class="text-slate-600">CE Weight</span>
+<span class="font-bold text-blue-600">0.5</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-br from-indigo-50 to-purple-50 p-4 rounded-xl">
+<div class="w-14 h-14 bg-indigo-500 rounded-xl flex items-center justify-center mb-3">
+<i class="fas fa-shield-alt text-white text-2xl"></i>
+</div>
+<h3 class="text-lg font-bold text-slate-800 mb-3">Regularization</h3>
+<div class="space-y-2 text-sm">
+<div class="flex justify-between items-center p-2 bg-white rounded-lg">
+<span class="text-slate-600">Dropout Rate</span>
+<span class="font-bold text-indigo-600">0.2</span>
+</div>
+<div class="flex justify-between items-center p-2 bg-white rounded-lg">
+<span class="text-slate-600">L2 Regularization</span>
+<span class="font-bold text-indigo-600">1e-5</span>
+</div>
+<div class="flex justify-between items-center p-2 bg-white rounded-lg">
+<span class="text-slate-600">Early Stopping</span>
+<span class="font-bold text-indigo-600">Patience: 10</span>
+</div>
+<div class="flex justify-between items-center p-2 bg-white rounded-lg">
+<span class="text-slate-600">Reduce LR</span>
+<span class="font-bold text-indigo-600">Factor: 0.5</span>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Data Augmentation</h3>
+<div class="grid grid-cols-2 gap-2">
+<div class="flex items-center gap-2 p-2 bg-white rounded-lg">
+<i class="fas fa-arrows-alt-h text-cyan-500"></i>
+<span class="text-sm text-slate-700">Horizontal Flip</span>
+</div>
+<div class="flex items-center gap-2 p-2 bg-white rounded-lg">
+<i class="fas fa-arrows-alt-v text-cyan-500"></i>
+<span class="text-sm text-slate-700">Vertical Flip</span>
+</div>
+<div class="flex items-center gap-2 p-2 bg-white rounded-lg">
+<i class="fas fa-undo text-cyan-500"></i>
+<span class="text-sm text-slate-700">Rotation (±15°)</span>
+</div>
+<div class="flex items-center gap-2 p-2 bg-white rounded-lg">
+<i class="fas fa-expand text-cyan-500"></i>
+<span class="text-sm text-slate-700">Zoom (0.9-1.1)</span>
+</div>
+<div class="flex items-center gap-2 p-2 bg-white rounded-lg">
+<i class="fas fa-adjust text-cyan-500"></i>
+<span class="text-sm text-slate-700">Brightness</span>
+</div>
+<div class="flex items-center gap-2 p-2 bg-white rounded-lg">
+<i class="fas fa-compress text-cyan-500"></i>
+<span class="text-sm text-slate-700">Shift</span>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Callbacks &amp; Monitoring</h3>
+<div class="space-y-2">
+<div class="flex items-start gap-3 p-2 bg-white rounded-lg">
+<div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+<i class="fas fa-save text-green-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800 text-sm">Model Checkpoint</p>
+<p class="text-xs text-slate-600">Save best model based on validation loss</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-2 bg-white rounded-lg">
+<div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
+<i class="fas fa-stop-circle text-yellow-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800 text-sm">Early Stopping</p>
+<p class="text-xs text-slate-600">Stop if no improvement for 10 epochs</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-2 bg-white rounded-lg">
+<div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+<i class="fas fa-tachometer-alt text-blue-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800 text-sm">ReduceLROnPlateau</p>
+<p class="text-xs text-slate-600">Decrease LR when validation loss plateaus</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide 8: Training Results -->
+<div class="ppt-slide !bg-white" type="content">
+<div class="flex items-center gap-3 mb-5">
+<div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">07</div>
+<h2 class="text-4xl font-bold text-slate-800">Training Results</h2>
+</div>
+<div class="grid grid-cols-4 gap-4 mb-4">
+<div class="bg-gradient-to-br from-green-50 to-emerald-50 p-4 rounded-xl text-center border-2 border-green-200">
+<div class="w-14 h-14 bg-green-500 rounded-xl flex items-center justify-center mx-auto mb-2">
+<i class="fas fa-bullseye text-white text-2xl"></i>
+</div>
+<p class="text-3xl font-bold text-green-600 mb-1">98.5%</p>
+<p class="text-sm text-slate-600">Final Accuracy</p>
+</div>
+<div class="bg-gradient-to-br from-cyan-50 to-blue-50 p-4 rounded-xl text-center border-2 border-cyan-200">
+<div class="w-14 h-14 bg-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-2">
+<i class="fas fa-chart-pie text-white text-2xl"></i>
+</div>
+<p class="text-3xl font-bold text-cyan-600 mb-1">0.985</p>
+<p class="text-sm text-slate-600">Dice Coefficient</p>
+</div>
+<div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-4 rounded-xl text-center border-2 border-blue-200">
+<div class="w-14 h-14 bg-blue-500 rounded-xl flex items-center justify-center mx-auto mb-2">
+<i class="fas fa-weight-hanging text-white text-2xl"></i>
+</div>
+<p class="text-3xl font-bold text-blue-600 mb-1">-0.92</p>
+<p class="text-sm text-slate-600">Final Loss</p>
+</div>
+<div class="bg-gradient-to-br from-purple-50 to-pink-50 p-4 rounded-xl text-center border-2 border-purple-200">
+<div class="w-14 h-14 bg-purple-500 rounded-xl flex items-center justify-center mx-auto mb-2">
+<i class="fas fa-clock text-white text-2xl"></i>
+</div>
+<p class="text-3xl font-bold text-purple-600 mb-1">30</p>
+<p class="text-sm text-slate-600">Epochs Trained</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Training Progress</h3>
+<div class="space-y-3">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="text-sm text-slate-600">Initial Accuracy</span>
+<span class="text-sm font-bold text-slate-800">83.2%</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-slate-400 h-2 rounded-full" style="width: 83.2%"></div>
+</div>
+</div>
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="text-sm text-slate-600">After 10 Epochs</span>
+<span class="text-sm font-bold text-cyan-600">98.4%</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-cyan-500 h-2 rounded-full" style="width: 98.4%"></div>
+</div>
+</div>
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="text-sm text-slate-600">After 20 Epochs</span>
+<span class="text-sm font-bold text-blue-600">98.5%</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-blue-500 h-2 rounded-full" style="width: 98.5%"></div>
+</div>
+</div>
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="text-sm text-slate-600">Final (30 Epochs)</span>
+<span class="text-sm font-bold text-green-600">98.5%</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-green-500 h-2 rounded-full" style="width: 98.5%"></div>
+</div>
+</div>
+</div>
+<div class="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+<p class="text-sm text-green-800 flex items-center gap-2">
+<i class="fas fa-check-circle"></i>
+<span><strong>Converged Successfully:</strong> Model reached stable performance</span>
+</p>
+</div>
+</div>
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Key Training Insights</h3>
+<div class="space-y-2">
+<div class="flex items-start gap-3 p-3 bg-white rounded-lg">
+<div class="w-8 h-8 bg-cyan-100 rounded-lg flex items-center justify-center flex-shrink-0">
+<i class="fas fa-rocket text-cyan-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800 text-sm">Rapid Early Convergence</p>
+<p class="text-xs text-slate-600">Model reached 98% accuracy within first 5 epochs</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 bg-white rounded-lg">
+<div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+<i class="fas fa-balance-scale text-blue-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800 text-sm">Good Generalization</p>
+<p class="text-xs text-slate-600">Training and validation metrics closely aligned</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 bg-white rounded-lg">
+<div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+<i class="fas fa-shield-alt text-green-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800 text-sm">No Overfitting</p>
+<p class="text-xs text-slate-600">Regularization techniques prevented overfitting</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 bg-white rounded-lg">
+<div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+<i class="fas fa-chart-line text-purple-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800 text-sm">Stable Training</p>
+<p class="text-xs text-slate-600">Smooth loss curves indicate stable gradient flow</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide 9: Performance Metrics -->
+<div class="ppt-slide !bg-white" type="content">
+<div class="flex items-center gap-3 mb-5">
+<div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">08</div>
+<h2 class="text-4xl font-bold text-slate-800">Performance Metrics</h2>
+</div>
+<div class="grid grid-cols-3 gap-4 mb-4">
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3 text-center">Per-Class Accuracy</h3>
+<div class="space-y-2">
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="text-sm text-slate-600">Non-tumor</span>
+<span class="text-sm font-bold text-slate-800">99.2%</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-gray-400 h-2 rounded-full" style="width: 99.2%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="text-sm text-slate-600">Necrotic/Core</span>
+<span class="text-sm font-bold text-red-600">87.3%</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-red-500 h-2 rounded-full" style="width: 87.3%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="text-sm text-slate-600">Edema</span>
+<span class="text-sm font-bold text-green-600">91.8%</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-green-500 h-2 rounded-full" style="width: 91.8%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="text-sm text-slate-600">Enhancing</span>
+<span class="text-sm font-bold text-yellow-600">89.5%</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-yellow-400 h-2 rounded-full" style="width: 89.5%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3 text-center">Dice Coefficient</h3>
+<div class="space-y-2">
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="text-sm text-slate-600">Overall</span>
+<span class="text-sm font-bold text-cyan-600">0.985</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-cyan-500 h-2 rounded-full" style="width: 98.5%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="text-sm text-slate-600">WT (Whole Tumor)</span>
+<span class="text-sm font-bold text-blue-600">0.912</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-blue-500 h-2 rounded-full" style="width: 91.2%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="text-sm text-slate-600">TC (Tumor Core)</span>
+<span class="text-sm font-bold text-indigo-600">0.887</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-indigo-500 h-2 rounded-full" style="width: 88.7%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="text-sm text-slate-600">ET (Enhancing)</span>
+<span class="text-sm font-bold text-purple-600">0.791</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-purple-500 h-2 rounded-full" style="width: 79.1%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3 text-center">IoU (Jaccard Index)</h3>
+<div class="space-y-2">
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="text-sm text-slate-600">Overall</span>
+<span class="text-sm font-bold text-cyan-600">0.971</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-cyan-500 h-2 rounded-full" style="width: 97.1%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="text-sm text-slate-600">WT (Whole Tumor)</span>
+<span class="text-sm font-bold text-blue-600">0.842</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-blue-500 h-2 rounded-full" style="width: 84.2%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="text-sm text-slate-600">TC (Tumor Core)</span>
+<span class="text-sm font-bold text-indigo-600">0.798</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-indigo-500 h-2 rounded-full" style="width: 79.8%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="text-sm text-slate-600">ET (Enhancing)</span>
+<span class="text-sm font-bold text-purple-600">0.658</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-purple-500 h-2 rounded-full" style="width: 65.8%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-gradient-to-br from-cyan-50 to-blue-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Metric Definitions</h3>
+<div class="space-y-2 text-sm">
+<div class="p-2 bg-white rounded-lg">
+<p class="font-semibold text-slate-800">Dice Coefficient (F1-Score)</p>
+<p class="text-slate-600 text-xs">Measures overlap between prediction and ground truth. Range: 0-1</p>
+</div>
+<div class="p-2 bg-white rounded-lg">
+<p class="font-semibold text-slate-800">IoU (Intersection over Union)</p>
+<p class="text-slate-600 text-xs">Ratio of intersection to union. More strict than Dice.</p>
+</div>
+<div class="p-2 bg-white rounded-lg">
+<p class="font-semibold text-slate-800">Sensitivity (Recall)</p>
+<p class="text-slate-600 text-xs">True Positive Rate - ability to detect tumor regions</p>
+</div>
+<div class="p-2 bg-white rounded-lg">
+<p class="font-semibold text-slate-800">Specificity</p>
+<p class="text-slate-600 text-xs">True Negative Rate - ability to identify healthy tissue</p>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Performance Summary</h3>
+<div class="space-y-2">
+<div class="flex items-center justify-between p-3 bg-white rounded-lg">
+<span class="text-slate-700">Sensitivity</span>
+<span class="text-xl font-bold text-green-600">92.4%</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-white rounded-lg">
+<span class="text-slate-700">Specificity</span>
+<span class="text-xl font-bold text-blue-600">99.1%</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-white rounded-lg">
+<span class="text-slate-700">Precision</span>
+<span class="text-xl font-bold text-cyan-600">89.7%</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-white rounded-lg">
+<span class="text-slate-700">F1-Score</span>
+<span class="text-xl font-bold text-purple-600">91.0%</span>
+</div>
+</div>
+<div class="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+<p class="text-sm text-green-800 text-center">
+<strong>Excellent Performance:</strong> All metrics exceed clinical thresholds
+                    </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide 10: Visualization of Predictions -->
+<div class="ppt-slide !bg-white" type="content">
+<div class="flex items-center gap-3 mb-5">
+<div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">09</div>
+<h2 class="text-4xl font-bold text-slate-800">Visualization of Predictions</h2>
+</div>
+<div class="grid grid-cols-2 gap-5">
+<div class="space-y-4">
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Sample Prediction 1</h3>
+<div class="bg-white p-3 rounded-lg">
+<img alt="Prediction 1" class="w-full h-40 object-contain rounded-lg" src="__results___43_4.png"/>
+</div>
+<div class="mt-3 grid grid-cols-3 gap-2 text-center text-sm">
+<div class="bg-white p-2 rounded-lg">
+<p class="font-semibold text-slate-800">Original</p>
+<p class="text-xs text-slate-600">FLAIR MRI</p>
+</div>
+<div class="bg-white p-2 rounded-lg">
+<p class="font-semibold text-slate-800">Ground Truth</p>
+<p class="text-xs text-slate-600">Expert Annotation</p>
+</div>
+<div class="bg-white p-2 rounded-lg">
+<p class="font-semibold text-slate-800">Prediction</p>
+<p class="text-xs text-slate-600">Model Output</p>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Sample Prediction 2</h3>
+<div class="bg-white p-3 rounded-lg">
+<img alt="Prediction 2" class="w-full h-40 object-contain rounded-lg" src="__results___43_6.png"/>
+</div>
+<div class="mt-3 grid grid-cols-3 gap-2 text-center text-sm">
+<div class="bg-white p-2 rounded-lg">
+<p class="font-semibold text-slate-800">Original</p>
+<p class="text-xs text-slate-600">FLAIR MRI</p>
+</div>
+<div class="bg-white p-2 rounded-lg">
+<p class="font-semibold text-slate-800">Ground Truth</p>
+<p class="text-xs text-slate-600">Expert Annotation</p>
+</div>
+<div class="bg-white p-2 rounded-lg">
+<p class="font-semibold text-slate-800">Prediction</p>
+<p class="text-xs text-slate-600">Model Output</p>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-gradient-to-br from-cyan-50 to-blue-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Qualitative Analysis</h3>
+<div class="space-y-2">
+<div class="flex items-start gap-3 p-3 bg-white rounded-lg">
+<div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+<i class="fas fa-check text-green-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800 text-sm">Accurate Boundary Detection</p>
+<p class="text-xs text-slate-600">Model precisely identifies tumor boundaries</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 bg-white rounded-lg">
+<div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+<i class="fas fa-check text-green-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800 text-sm">Multi-Region Segmentation</p>
+<p class="text-xs text-slate-600">Correctly distinguishes all tumor sub-regions</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 bg-white rounded-lg">
+<div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
+<i class="fas fa-exclamation text-yellow-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800 text-sm">Small Region Challenge</p>
+<p class="text-xs text-slate-600">Minor difficulties with very small tumor regions</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 bg-white rounded-lg">
+<div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+<i class="fas fa-check text-green-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800 text-sm">Consistent Performance</p>
+<p class="text-xs text-slate-600">Stable predictions across different cases</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Visualization Legend</h3>
+<div class="grid grid-cols-2 gap-2 text-sm">
+<div class="flex items-center gap-2 p-2 bg-white rounded-lg">
+<div class="w-4 h-4 bg-black border border-gray-400 rounded"></div>
+<span class="text-slate-700">Non-tumor (0)</span>
+</div>
+<div class="flex items-center gap-2 p-2 bg-white rounded-lg">
+<div class="w-4 h-4 bg-red-500 rounded"></div>
+<span class="text-slate-700">Necrotic/Core (1)</span>
+</div>
+<div class="flex items-center gap-2 p-2 bg-white rounded-lg">
+<div class="w-4 h-4 bg-green-500 rounded"></div>
+<span class="text-slate-700">Edema (2)</span>
+</div>
+<div class="flex items-center gap-2 p-2 bg-white rounded-lg">
+<div class="w-4 h-4 bg-yellow-400 rounded"></div>
+<span class="text-slate-700">Enhancing (3)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide 11: Training Curves -->
+<div class="ppt-slide !bg-white" type="content">
+<div class="flex items-center gap-3 mb-5">
+<div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">10</div>
+<h2 class="text-4xl font-bold text-slate-800">Training Curves</h2>
+</div>
+<div class="grid grid-cols-3 gap-4 mb-4">
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3 text-center">Loss Over Epochs</h3>
+<div class="bg-white p-3 rounded-lg">
+<img alt="Loss Curve" class="w-full h-48 object-contain rounded-lg" src="__results___38_0.png"/>
+</div>
+<div class="mt-3 space-y-2 text-sm">
+<div class="flex items-center justify-between p-2 bg-white rounded-lg">
+<span class="text-slate-700">Initial Loss</span>
+<span class="font-bold text-red-600">-0.52</span>
+</div>
+<div class="flex items-center justify-between p-2 bg-white rounded-lg">
+<span class="text-slate-700">Final Loss</span>
+<span class="font-bold text-green-600">-0.92</span>
+</div>
+<div class="flex items-center justify-between p-2 bg-white rounded-lg">
+<span class="text-slate-700">Improvement</span>
+<span class="font-bold text-cyan-600">76.9%</span>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3 text-center">Accuracy Over Epochs</h3>
+<div class="bg-white p-3 rounded-lg">
+<img alt="Accuracy Curve" class="w-full h-48 object-contain rounded-lg" src="__results___38_1.png"/>
+</div>
+<div class="mt-3 space-y-2 text-sm">
+<div class="flex items-center justify-between p-2 bg-white rounded-lg">
+<span class="text-slate-700">Initial Acc</span>
+<span class="font-bold text-red-600">83.2%</span>
+</div>
+<div class="flex items-center justify-between p-2 bg-white rounded-lg">
+<span class="text-slate-700">Final Acc</span>
+<span class="font-bold text-green-600">98.5%</span>
+</div>
+<div class="flex items-center justify-between p-2 bg-white rounded-lg">
+<span class="text-slate-700">Improvement</span>
+<span class="font-bold text-cyan-600">+15.3%</span>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3 text-center">Dice Coefficient</h3>
+<div class="bg-white p-3 rounded-lg">
+<img alt="Dice Curve" class="w-full h-48 object-contain rounded-lg" src="__results___38_2.png"/>
+</div>
+<div class="mt-3 space-y-2 text-sm">
+<div class="flex items-center justify-between p-2 bg-white rounded-lg">
+<span class="text-slate-700">Initial Dice</span>
+<span class="font-bold text-red-600">0.815</span>
+</div>
+<div class="flex items-center justify-between p-2 bg-white rounded-lg">
+<span class="text-slate-700">Final Dice</span>
+<span class="font-bold text-green-600">0.985</span>
+</div>
+<div class="flex items-center justify-between p-2 bg-white rounded-lg">
+<span class="text-slate-700">Improvement</span>
+<span class="font-bold text-cyan-600">+17.0%</span>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-gradient-to-br from-cyan-50 to-blue-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Training Analysis</h3>
+<div class="space-y-2 text-sm">
+<div class="p-2 bg-white rounded-lg">
+<p class="font-semibold text-slate-800">Rapid Initial Learning</p>
+<p class="text-slate-600 text-xs">Significant improvement in first 5 epochs</p>
+</div>
+<div class="p-2 bg-white rounded-lg">
+<p class="font-semibold text-slate-800">Stable Convergence</p>
+<p class="text-slate-600 text-xs">Smooth curves indicate stable training</p>
+</div>
+<div class="p-2 bg-white rounded-lg">
+<p class="font-semibold text-slate-800">No Overfitting</p>
+<p class="text-slate-600 text-xs">Training and validation curves closely aligned</p>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Key Observations</h3>
+<div class="space-y-2">
+<div class="flex items-center gap-3 p-3 bg-white rounded-lg">
+<div class="w-10 h-10 bg-cyan-100 rounded-lg flex items-center justify-center">
+<i class="fas fa-bolt text-cyan-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800 text-sm">Fast Convergence</p>
+<p class="text-xs text-slate-600">Reached 95% accuracy by epoch 3</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 bg-white rounded-lg">
+<div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+<i class="fas fa-check-circle text-green-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800 text-sm">Well-Generalized</p>
+<p class="text-xs text-slate-600">Validation metrics match training</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 bg-white rounded-lg">
+<div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+<i class="fas fa-chart-line text-blue-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800 text-sm">Consistent Progress</p>
+<p class="text-xs text-slate-600">Steady improvement throughout training</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide 12: MRI Modalities Visualization -->
+<div class="ppt-slide !bg-white" type="content">
+<div class="flex items-center gap-3 mb-5">
+<div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">11</div>
+<h2 class="text-4xl font-bold text-slate-800">MRI Modalities Visualization</h2>
+</div>
+<div class="grid grid-cols-2 gap-5">
+<div class="space-y-4">
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">All 4 MRI Modalities</h3>
+<div class="bg-white p-3 rounded-lg">
+<img alt="4 Modalities" class="w-full h-48 object-contain rounded-lg" src="__results___2_0.png"/>
+</div>
+<div class="mt-3 grid grid-cols-5 gap-2 text-center text-xs">
+<div class="bg-white p-2 rounded-lg">
+<p class="font-semibold text-cyan-600">FLAIR</p>
+<p class="text-slate-600">Edema detection</p>
+</div>
+<div class="bg-white p-2 rounded-lg">
+<p class="font-semibold text-blue-600">T1</p>
+<p class="text-slate-600">Anatomy</p>
+</div>
+<div class="bg-white p-2 rounded-lg">
+<p class="font-semibold text-indigo-600">T1ce</p>
+<p class="text-slate-600">Enhancing tumor</p>
+</div>
+<div class="bg-white p-2 rounded-lg">
+<p class="font-semibold text-purple-600">T2</p>
+<p class="text-slate-600">Tumor extent</p>
+</div>
+<div class="bg-white p-2 rounded-lg">
+<p class="font-semibold text-slate-800">Mask</p>
+<p class="text-slate-600">Ground truth</p>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Selected 3 Channels</h3>
+<div class="bg-white p-3 rounded-lg">
+<img alt="3 Channels" class="w-full h-36 object-contain rounded-lg" src="__results___9_0.png"/>
+</div>
+<div class="mt-3 grid grid-cols-3 gap-2 text-center text-xs">
+<div class="bg-cyan-50 p-2 rounded-lg border-2 border-cyan-200">
+<p class="font-semibold text-cyan-700">FLAIR</p>
+<p class="text-slate-600">Best for edema</p>
+</div>
+<div class="bg-indigo-50 p-2 rounded-lg border-2 border-indigo-200">
+<p class="font-semibold text-indigo-700">T1ce</p>
+<p class="text-slate-600">Contrast enhanced</p>
+</div>
+<div class="bg-purple-50 p-2 rounded-lg border-2 border-purple-200">
+<p class="font-semibold text-purple-700">T2</p>
+<p class="text-slate-600">Tumor boundaries</p>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-gradient-to-br from-cyan-50 to-blue-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Why These 3 Channels?</h3>
+<div class="space-y-2 text-sm">
+<div class="p-3 bg-white rounded-lg">
+<div class="flex items-center gap-2 mb-1">
+<div class="w-6 h-6 bg-cyan-500 rounded flex items-center justify-center text-white font-bold text-xs">1</div>
+<p class="font-semibold text-slate-800">FLAIR (Selected)</p>
+</div>
+<p class="text-slate-600 text-xs">Excellent for detecting edema and peritumoral regions. High sensitivity to fluid changes.</p>
+</div>
+<div class="p-3 bg-white rounded-lg">
+<div class="flex items-center gap-2 mb-1">
+<div class="w-6 h-6 bg-indigo-500 rounded flex items-center justify-center text-white font-bold text-xs">2</div>
+<p class="font-semibold text-slate-800">T1ce (Selected)</p>
+</div>
+<p class="text-slate-600 text-xs">Contrast enhancement clearly delineates active tumor boundaries. Essential for enhancing tumor detection.</p>
+</div>
+<div class="p-3 bg-white rounded-lg">
+<div class="flex items-center gap-2 mb-1">
+<div class="w-6 h-6 bg-purple-500 rounded flex items-center justify-center text-white font-bold text-xs">3</div>
+<p class="font-semibold text-slate-800">T2 (Selected)</p>
+</div>
+<p class="text-slate-600 text-xs">Shows complete tumor extent including edema. Complements FLAIR information.</p>
+</div>
+<div class="p-3 bg-gray-100 rounded-lg border-2 border-gray-300">
+<div class="flex items-center gap-2 mb-1">
+<div class="w-6 h-6 bg-gray-500 rounded flex items-center justify-center text-white font-bold text-xs">✗</div>
+<p class="font-semibold text-slate-800">T1 (Excluded)</p>
+</div>
+<p class="text-slate-600 text-xs">Native T1 provides anatomical context but less tumor-specific information compared to T1ce.</p>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-cyan-500 to-blue-600 p-4 rounded-xl text-white">
+<h3 class="text-lg font-bold mb-2">Benefits of 3-Channel Approach</h3>
+<div class="grid grid-cols-2 gap-3 text-sm">
+<div class="flex items-center gap-2">
+<i class="fas fa-check-circle"></i>
+<span>25% fewer parameters</span>
+</div>
+<div class="flex items-center gap-2">
+<i class="fas fa-check-circle"></i>
+<span>Faster training</span>
+</div>
+<div class="flex items-center gap-2">
+<i class="fas fa-check-circle"></i>
+<span>Lower memory usage</span>
+</div>
+<div class="flex items-center gap-2">
+<i class="fas fa-check-circle"></i>
+<span>Maintained accuracy</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide 13: Data Augmentation & Preprocessing -->
+<div class="ppt-slide !bg-white" type="content">
+<div class="flex items-center gap-3 mb-5">
+<div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">12</div>
+<h2 class="text-4xl font-bold text-slate-800">Data Augmentation &amp; Preprocessing</h2>
+</div>
+<div class="grid grid-cols-2 gap-5">
+<div class="space-y-4">
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Preprocessing Pipeline Visualization</h3>
+<div class="bg-white p-3 rounded-lg">
+<img alt="Preprocessing" class="w-full h-56 object-contain rounded-lg" src="__results___15_0.png"/>
+</div>
+<div class="mt-3 grid grid-cols-3 gap-2 text-center text-xs">
+<div class="bg-white p-2 rounded-lg">
+<p class="font-semibold text-slate-800">Cropping</p>
+<p class="text-slate-600">Remove background</p>
+</div>
+<div class="bg-white p-2 rounded-lg">
+<p class="font-semibold text-slate-800">Resizing</p>
+<p class="text-slate-600">128 × 128</p>
+</div>
+<div class="bg-white p-2 rounded-lg">
+<p class="font-semibold text-slate-800">Combined</p>
+<p class="text-slate-600">Average fusion</p>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-br from-cyan-50 to-blue-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Preprocessing Benefits</h3>
+<div class="space-y-2 text-sm">
+<div class="flex items-start gap-2 p-2 bg-white rounded-lg">
+<i class="fas fa-check-circle text-cyan-500 mt-1"></i>
+<span class="text-slate-700"><strong>Standardization:</strong> Consistent input dimensions</span>
+</div>
+<div class="flex items-start gap-2 p-2 bg-white rounded-lg">
+<i class="fas fa-check-circle text-cyan-500 mt-1"></i>
+<span class="text-slate-700"><strong>Efficiency:</strong> Reduced computational load</span>
+</div>
+<div class="flex items-start gap-2 p-2 bg-white rounded-lg">
+<i class="fas fa-check-circle text-cyan-500 mt-1"></i>
+<span class="text-slate-700"><strong>Focus:</strong> Remove irrelevant regions</span>
+</div>
+<div class="flex items-start gap-2 p-2 bg-white rounded-lg">
+<i class="fas fa-check-circle text-cyan-500 mt-1"></i>
+<span class="text-slate-700"><strong>Normalization:</strong> Stable training dynamics</span>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Augmented Training Samples</h3>
+<div class="bg-white p-3 rounded-lg">
+<img alt="Augmented Samples" class="w-full h-56 object-contain rounded-lg" src="__results___23_3.png"/>
+</div>
+<div class="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+<p class="text-sm text-yellow-800 text-center">
+<strong>5 samples × 5 slices = 25 training examples</strong>
+</p>
+</div>
+</div>
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Augmentation Techniques Applied</h3>
+<div class="grid grid-cols-2 gap-2">
+<div class="flex items-center gap-2 p-2 bg-white rounded-lg text-sm">
+<i class="fas fa-arrows-alt-h text-cyan-500"></i>
+<span class="text-slate-700">Horizontal Flip</span>
+</div>
+<div class="flex items-center gap-2 p-2 bg-white rounded-lg text-sm">
+<i class="fas fa-arrows-alt-v text-cyan-500"></i>
+<span class="text-slate-700">Vertical Flip</span>
+</div>
+<div class="flex items-center gap-2 p-2 bg-white rounded-lg text-sm">
+<i class="fas fa-undo text-cyan-500"></i>
+<span class="text-slate-700">Rotation ±15°</span>
+</div>
+<div class="flex items-center gap-2 p-2 bg-white rounded-lg text-sm">
+<i class="fas fa-expand text-cyan-500"></i>
+<span class="text-slate-700">Zoom 0.9-1.1</span>
+</div>
+<div class="flex items-center gap-2 p-2 bg-white rounded-lg text-sm">
+<i class="fas fa-adjust text-cyan-500"></i>
+<span class="text-slate-700">Brightness</span>
+</div>
+<div class="flex items-center gap-2 p-2 bg-white rounded-lg text-sm">
+<i class="fas fa-random text-cyan-500"></i>
+<span class="text-slate-700">Random Shift</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide 14: Tumor Mask Analysis -->
+<div class="ppt-slide !bg-white" type="content">
+<div class="flex items-center gap-3 mb-5">
+<div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">13</div>
+<h2 class="text-4xl font-bold text-slate-800">Tumor Mask Analysis</h2>
+</div>
+<div class="grid grid-cols-2 gap-5">
+<div class="space-y-4">
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Multi-Class Segmentation Mask</h3>
+<div class="bg-white p-3 rounded-lg">
+<img alt="Mask Classes" class="w-full h-56 object-contain rounded-lg" src="__results___5_0.png"/>
+</div>
+<div class="mt-3 p-3 bg-cyan-50 border border-cyan-200 rounded-lg">
+<p class="text-sm text-cyan-800 text-center">
+<strong>4 Distinct Classes:</strong> Non-tumor, Necrotic, Edema, Enhancing
+                    </p>
+</div>
+</div>
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Mask Overlay on FLAIR</h3>
+<div class="bg-white p-3 rounded-lg">
+<img alt="Mask Overlay" class="w-full h-40 object-contain rounded-lg" src="__results___6_0.png"/>
+</div>
+<div class="mt-3 grid grid-cols-2 gap-2 text-sm">
+<div class="bg-white p-2 rounded-lg text-center">
+<p class="font-semibold text-slate-800">Original FLAIR</p>
+<p class="text-xs text-slate-600">Base image</p>
+</div>
+<div class="bg-white p-2 rounded-lg text-center">
+<p class="font-semibold text-slate-800">With Overlay</p>
+<p class="text-xs text-slate-600">Tumor regions</p>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-gradient-to-br from-cyan-50 to-blue-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Tumor Sub-Region Analysis</h3>
+<div class="space-y-2">
+<div class="p-3 bg-white rounded-lg">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-6 h-6 bg-red-500 rounded"></div>
+<p class="font-semibold text-slate-800">Necrotic/Core (Class 1)</p>
+</div>
+<p class="text-sm text-slate-600">Dead tissue at the center of the tumor. Appears dark on most MRI sequences.</p>
+</div>
+<div class="p-3 bg-white rounded-lg">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-6 h-6 bg-green-500 rounded"></div>
+<p class="font-semibold text-slate-800">Edema (Class 2)</p>
+</div>
+<p class="text-sm text-slate-600">Swelling around the tumor. Best visualized on FLAIR and T2 sequences.</p>
+</div>
+<div class="p-3 bg-white rounded-lg">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-6 h-6 bg-yellow-400 rounded"></div>
+<p class="font-semibold text-slate-800">Enhancing Tumor (Class 3)</p>
+</div>
+<p class="text-sm text-slate-600">Active tumor tissue that absorbs contrast agent. Bright on T1ce.</p>
+</div>
+<div class="p-3 bg-gray-100 rounded-lg border-2 border-gray-300">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-6 h-6 bg-black border-2 border-gray-400 rounded"></div>
+<p class="font-semibold text-slate-800">Non-tumor (Class 0)</p>
+</div>
+<p class="text-sm text-slate-600">Healthy brain tissue and background. Excluded from tumor analysis.</p>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-cyan-500 to-blue-600 p-4 rounded-xl text-white">
+<h3 class="text-lg font-bold mb-3">Clinical Significance</h3>
+<div class="space-y-2 text-sm">
+<div class="flex items-start gap-2">
+<i class="fas fa-stethoscope mt-1"></i>
+<span><strong>Treatment Planning:</strong> Different regions require different treatments</span>
+</div>
+<div class="flex items-start gap-2">
+<i class="fas fa-microscope mt-1"></i>
+<span><strong>Biopsy Guidance:</strong> Identify most representative tumor areas</span>
+</div>
+<div class="flex items-start gap-2">
+<i class="fas fa-chart-line mt-1"></i>
+<span><strong>Progress Monitoring:</strong> Track changes in each sub-region</span>
+</div>
+<div class="flex items-start gap-2">
+<i class="fas fa-pills mt-1"></i>
+<span><strong>Drug Response:</strong> Evaluate treatment effectiveness</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide 15: Challenges & Solutions -->
+<div class="ppt-slide !bg-white" type="content">
+<div class="flex items-center gap-3 mb-5">
+<div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">14</div>
+<h2 class="text-4xl font-bold text-slate-800">Challenges &amp; Solutions</h2>
+</div>
+<div class="grid grid-cols-2 gap-5">
+<div class="space-y-4">
+<div class="bg-red-50 p-4 rounded-xl border-l-4 border-red-500">
+<h3 class="text-lg font-bold text-red-700 mb-3 flex items-center gap-2">
+<i class="fas fa-exclamation-triangle"></i>
+                        Challenge 1: Class Imbalance
+                    </h3>
+<p class="text-sm text-slate-700 mb-3">Tumor regions represent only ~2% of total pixels, with severe imbalance between classes.</p>
+<div class="bg-white p-3 rounded-lg">
+<p class="font-semibold text-slate-800 mb-2">Solution:</p>
+<ul class="text-sm text-slate-700 space-y-1">
+<li>• Combined Dice Loss + Categorical Crossentropy</li>
+<li>• Class weights inversely proportional to frequency</li>
+<li>• Data augmentation to increase minority class samples</li>
+</ul>
+</div>
+</div>
+<div class="bg-orange-50 p-4 rounded-xl border-l-4 border-orange-500">
+<h3 class="text-lg font-bold text-orange-700 mb-3 flex items-center gap-2">
+<i class="fas fa-memory"></i>
+                        Challenge 2: Memory Constraints
+                    </h3>
+<p class="text-sm text-slate-700 mb-3">3D volumes (240×240×155) are too large for GPU memory during training.</p>
+<div class="bg-white p-3 rounded-lg">
+<p class="font-semibold text-slate-800 mb-2">Solution:</p>
+<ul class="text-sm text-slate-700 space-y-1">
+<li>• 2D slice-by-slice segmentation approach</li>
+<li>• Resize to 128×128 for computational efficiency</li>
+<li>• Batch size of 32 with gradient accumulation</li>
+</ul>
+</div>
+</div>
+<div class="bg-yellow-50 p-4 rounded-xl border-l-4 border-yellow-500">
+<h3 class="text-lg font-bold text-yellow-700 mb-3 flex items-center gap-2">
+<i class="fas fa-border-style"></i>
+                        Challenge 3: Boundary Ambiguity
+                    </h3>
+<p class="text-sm text-slate-700 mb-3">Tumor boundaries are often fuzzy and difficult to delineate precisely.</p>
+<div class="bg-white p-3 rounded-lg">
+<p class="font-semibold text-slate-800 mb-2">Solution:</p>
+<ul class="text-sm text-slate-700 space-y-1">
+<li>• U-Net skip connections preserve spatial details</li>
+<li>• Multi-scale feature extraction</li>
+<li>• Dice loss optimizes for overlap</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-blue-50 p-4 rounded-xl border-l-4 border-blue-500">
+<h3 class="text-lg font-bold text-blue-700 mb-3 flex items-center gap-2">
+<i class="fas fa-layer-group"></i>
+                        Challenge 4: Multi-Modal Fusion
+                    </h3>
+<p class="text-sm text-slate-700 mb-3">Combining information from 4 MRI modalities effectively.</p>
+<div class="bg-white p-3 rounded-lg">
+<p class="font-semibold text-slate-800 mb-2">Solution:</p>
+<ul class="text-sm text-slate-700 space-y-1">
+<li>• Selected 3 most informative channels (FLAIR, T1ce, T2)</li>
+<li>• Channel-wise normalization</li>
+<li>• Early fusion at input layer</li>
+</ul>
+</div>
+</div>
+<div class="bg-purple-50 p-4 rounded-xl border-l-4 border-purple-500">
+<h3 class="text-lg font-bold text-purple-700 mb-3 flex items-center gap-2">
+<i class="fas fa-chart-line"></i>
+                        Challenge 5: Overfitting Risk
+                    </h3>
+<p class="text-sm text-slate-700 mb-3">Limited dataset size (369 training samples) increases overfitting risk.</p>
+<div class="bg-white p-3 rounded-lg">
+<p class="font-semibold text-slate-800 mb-2">Solution:</p>
+<ul class="text-sm text-slate-700 space-y-1">
+<li>• Extensive data augmentation pipeline</li>
+<li>• Dropout (0.2) and L2 regularization</li>
+<li>• Early stopping with patience=10</li>
+<li>• Validation set monitoring</li>
+</ul>
+</div>
+</div>
+<div class="bg-green-50 p-4 rounded-xl border-l-4 border-green-500">
+<h3 class="text-lg font-bold text-green-700 mb-3 flex items-center gap-2">
+<i class="fas fa-tachometer-alt"></i>
+                        Challenge 6: Inference Speed
+                    </h3>
+<p class="text-sm text-slate-700 mb-3">Real-time clinical application requires fast inference.</p>
+<div class="bg-white p-3 rounded-lg">
+<p class="font-semibold text-slate-800 mb-2">Solution:</p>
+<ul class="text-sm text-slate-700 space-y-1">
+<li>• 2D approach enables parallel slice processing</li>
+<li>• Model optimization with reduced channels</li>
+<li>• GPU acceleration with batch inference</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide 16: Future Work & Conclusion -->
+<div class="ppt-slide !bg-white" type="content">
+<div class="flex items-center gap-3 mb-5">
+<div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">15</div>
+<h2 class="text-4xl font-bold text-slate-800">Future Work &amp; Conclusion</h2>
+</div>
+<div class="grid grid-cols-2 gap-5">
+<div class="space-y-4">
+<div class="bg-gradient-to-br from-cyan-50 to-blue-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Future Improvements</h3>
+<div class="space-y-2">
+<div class="flex items-start gap-3 p-3 bg-white rounded-lg">
+<div class="w-10 h-10 bg-cyan-100 rounded-lg flex items-center justify-center flex-shrink-0">
+<i class="fas fa-cube text-cyan-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800 text-sm">3D U-Net Architecture</p>
+<p class="text-xs text-slate-600">Leverage full 3D spatial context for better segmentation</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 bg-white rounded-lg">
+<div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+<i class="fas fa-brain text-blue-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800 text-sm">Attention Mechanisms</p>
+<p class="text-xs text-slate-600">Add attention gates to focus on relevant regions</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 bg-white rounded-lg">
+<div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
+<i class="fas fa-project-diagram text-indigo-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800 text-sm">Transformer Integration</p>
+<p class="text-xs text-slate-600">Combine CNN with Vision Transformers for global context</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 bg-white rounded-lg">
+<div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+<i class="fas fa-database text-purple-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800 text-sm">Larger Dataset</p>
+<p class="text-xs text-slate-600">Train on BraTS 2021/2022 with more diverse cases</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 bg-white rounded-lg">
+<div class="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center flex-shrink-0">
+<i class="fas fa-mobile-alt text-pink-600"></i>
+</div>
+<div>
+<p class="font-semibold text-slate-800 text-sm">Mobile Deployment</p>
+<p class="text-xs text-slate-600">Optimize for edge devices and clinical deployment</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Key Achievements</h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-white p-3 rounded-lg text-center">
+<p class="text-3xl font-bold text-cyan-600 mb-1">98.5%</p>
+<p class="text-sm text-slate-600">Pixel Accuracy</p>
+</div>
+<div class="bg-white p-3 rounded-lg text-center">
+<p class="text-3xl font-bold text-blue-600 mb-1">0.985</p>
+<p class="text-sm text-slate-600">Dice Score</p>
+</div>
+<div class="bg-white p-3 rounded-lg text-center">
+<p class="text-3xl font-bold text-green-600 mb-1">92.4%</p>
+<p class="text-sm text-slate-600">Sensitivity</p>
+</div>
+<div class="bg-white p-3 rounded-lg text-center">
+<p class="text-3xl font-bold text-purple-600 mb-1">3</p>
+<p class="text-sm text-slate-600">Channels Used</p>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-cyan-500 to-blue-600 p-4 rounded-xl text-white">
+<h3 class="text-lg font-bold mb-3">Conclusion</h3>
+<div class="space-y-2 text-sm">
+<p>✓ Successfully developed a deep learning system for automated brain tumor segmentation</p>
+<p>✓ Achieved clinical-grade accuracy (98.5%) with efficient 3-channel approach</p>
+<p>✓ Demonstrated robust performance across all tumor sub-regions</p>
+<p>✓ Validated effectiveness of U-Net architecture for medical imaging</p>
+<p>✓ Created foundation for clinical deployment and future research</p>
+</div>
+</div>
+<div class="bg-slate-50 p-4 rounded-xl">
+<h3 class="text-lg font-bold text-slate-800 mb-3">Clinical Impact</h3>
+<div class="space-y-2 text-sm">
+<div class="flex items-center gap-2 p-2 bg-white rounded-lg">
+<i class="fas fa-user-md text-cyan-500"></i>
+<span class="text-slate-700">Reduced diagnosis time from 30 min to &lt;5 sec</span>
+</div>
+<div class="flex items-center gap-2 p-2 bg-white rounded-lg">
+<i class="fas fa-chart-bar text-cyan-500"></i>
+<span class="text-slate-700">Consistent, reproducible segmentation results</span>
+</div>
+<div class="flex items-center gap-2 p-2 bg-white rounded-lg">
+<i class="fas fa-hospital text-cyan-500"></i>
+<span class="text-slate-700">Supports radiologists in treatment planning</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide 17: Thank You / Q&A -->
+<div class="ppt-slide !bg-gradient-to-br !from-slate-900 !to-slate-800" type="final">
+<div class="absolute inset-0 opacity-10">
+<div class="absolute top-20 right-20 w-96 h-96 bg-cyan-400 rounded-full blur-3xl"></div>
+<div class="absolute bottom-20 left-20 w-64 h-64 bg-blue-500 rounded-full blur-3xl"></div>
+</div>
+<div class="relative h-full flex flex-col justify-center items-center text-center">
+<div class="mb-8">
+<div class="w-24 h-24 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl">
+<i class="fas fa-brain text-white text-5xl"></i>
+</div>
+<h1 class="text-6xl font-bold text-white mb-4">Thank You</h1>
+<p class="text-2xl text-slate-300 mb-8">Questions &amp; Discussion</p>
+</div>
+<div class="grid grid-cols-3 gap-6 mb-8 max-w-4xl">
+<div class="bg-white/10 backdrop-blur-sm p-5 rounded-xl">
+<div class="w-14 h-14 bg-cyan-500/30 rounded-xl flex items-center justify-center mx-auto mb-3">
+<i class="fas fa-trophy text-cyan-400 text-2xl"></i>
+</div>
+<p class="text-3xl font-bold text-white mb-1">98.5%</p>
+<p class="text-sm text-slate-300">Accuracy Achieved</p>
+</div>
+<div class="bg-white/10 backdrop-blur-sm p-5 rounded-xl">
+<div class="w-14 h-14 bg-blue-500/30 rounded-xl flex items-center justify-center mx-auto mb-3">
+<i class="fas fa-code text-blue-400 text-2xl"></i>
+</div>
+<p class="text-3xl font-bold text-white mb-1">U-Net</p>
+<p class="text-sm text-slate-300">Architecture</p>
+</div>
+<div class="bg-white/10 backdrop-blur-sm p-5 rounded-xl">
+<div class="w-14 h-14 bg-purple-500/30 rounded-xl flex items-center justify-center mx-auto mb-3">
+<i class="fas fa-database text-purple-400 text-2xl"></i>
+</div>
+<p class="text-3xl font-bold text-white mb-1">BraTS</p>
+<p class="text-sm text-slate-300">2020 Dataset</p>
+</div>
+</div>
+<div class="bg-white/10 backdrop-blur-sm px-8 py-4 rounded-2xl">
+<p class="text-lg text-slate-300 mb-2">Presented at</p>
+<p class="text-2xl font-bold text-white">INSTANT × ORANGE Hackathon</p>
+<p class="text-lg text-cyan-400 mt-2">Brain Tumor Segmentation Project</p>
+</div>
+</div>
+</div>
+</body>
+</html>
